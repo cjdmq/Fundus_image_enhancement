@@ -1,10 +1,10 @@
 #pragma once
-
 #include <vector>
 #include<random>
 #include "opencv2/core/core.hpp"
 #include <opencv2/opencv.hpp>
 #include"mathcal.h"
+
 
 class EnhanceProcess
 {
@@ -13,94 +13,165 @@ public:
     static EnhanceProcess* Instance();
 
 
+    
+    //************************************
+    // Company:   BigVision
+    // Author:    Xu Duo
+    // Date:	  2023/11/13
+    // Method:    addGaussianNoise
+    // FullName:  EnhanceProcess::addGaussianNoise
+    // Access:    public 
+    // Returns:   cv::Mat
+    // Qualifier:
+    // Parameter: cv::Mat & image
+    // Parameter: double mean
+    // Parameter: double stddev
+    //************************************
     cv::Mat addGaussianNoise(cv::Mat& image, double mean, double stddev);
 
-    /** @XD hyit-bigvision
-    *
-    src is input image
-    return output image
-    */
+    
+    //************************************
+    // Company:   BigVision
+    // Author:    Xu Duo
+    // Date:	  2023/11/13
+    // Method:    ManyPicAve
+    // FullName:  EnhanceProcess::ManyPicAve
+    // Access:    public 
+    // Returns:   cv::Mat
+    // Qualifier:
+    // Parameter: cv::Mat & image
+    // Parameter: int number
+    //************************************
     cv::Mat ManyPicAve(cv::Mat& image, int number);
 
-    /** @XD hyit-bigvision
-    * 
-    construct the regulatory parameter rp
-    if src channels is three  return vector'size is three
-        0: channel  blue's rp
-        1: channel  green's rp
-        2: channel  red's rp
-    if src channels is one  return vector'size is one
-        0: channel  src's rp
-    if src channels is NULL  return vector'size is zero
-    */
+   
+    //************************************
+    // Company:   BigVision
+    // Author:    Xu Duo
+    // Date:	  2023/11/13
+    // Method:    cal_rp
+    // FullName:  EnhanceProcess::cal_rp
+    // Access:    public 
+    // Returns:   std::vector<double>
+    // Qualifier:
+    // Parameter: cv::Mat & src
+    //************************************
     std::vector<double> cal_rp(cv::Mat& src);
 
-    /** @XD hyit-bigvision
-    *
-    calculate parameter gradient
-    if src channels is three  return vector'size is three
-        0: channel  blue's gradient
-        1: channel  green's gradient
-        2: channel  red's gradient
-    if src channels is one  return vector'size is one
-        0: channel  src's gradient
-    if src channels is NULL  return vector'size is zero
-    */
+    
+    //************************************
+    // Company:   BigVision
+    // Author:    Xu Duo
+    // Date:	  2023/11/13
+    // Method:    calculateGradient
+    // FullName:  EnhanceProcess::calculateGradient
+    // Access:    public 
+    // Returns:   void
+    // Qualifier:
+    // Parameter: cv::Mat & image
+    // Parameter: std::vector<cv::Mat> & dx
+    // Parameter: std::vector<cv::Mat> & dy
+    //************************************
     void calculateGradient(cv::Mat& image, std::vector<cv::Mat>& dx, std::vector<cv::Mat>& dy);
 
-    /** @XD hyit-bigvision
-    *
-    calculate parameter TV
-    if src channels is three  return vector'size is three
-        0: channel  blue's TV
-        1: channel  green's TV
-        2: channel  red's TV
-    if src channels is one  return vector'size is one
-        0: channel  src's TV
-    if src channels is NULL  return vector'size is zero
-    */
+    
+    //************************************
+    // Company:   BigVision
+    // Author:    Xu Duo
+    // Date:	  2023/11/13
+    // Method:    calculateTotalVariation
+    // FullName:  EnhanceProcess::calculateTotalVariation
+    // Access:    public 
+    // Returns:   std::vector<double>
+    // Qualifier:
+    // Parameter: std::vector<cv::Mat> & dx
+    // Parameter: std::vector<cv::Mat> & dy
+    //************************************
     std::vector<double> calculateTotalVariation(std::vector<cv::Mat>& dx, std::vector<cv::Mat>& dy);
 
-    /** @XD hyit-bigvision
-    *
-    get noise layers
-    src is input image
-    ksize is gaussian kernel size
-    return noise layers image
-    */
+    
+    //************************************
+    // Company:   BigVision
+    // Author:    Xu Duo
+    // Date:	  2023/11/13
+    // Method:    get_noise_layers
+    // FullName:  EnhanceProcess::get_noise_layers
+    // Access:    public 
+    // Returns:   cv::Mat
+    // Qualifier:
+    // Parameter: cv::Mat & src
+    // Parameter: int ksize
+    //************************************
     cv::Mat get_noise_layers(cv::Mat& src, int ksize);
 
-   /** @XD hyit-bigvision
-    *
-    get structrue layers
-    src is input image
-    ksize is gaussian kernel size
-    return structrue layers image
-    */
+   
+    //************************************
+    // Company:   BigVision
+    // Author:    Xu Duo
+    // Date:	  2023/11/13
+    // Method:    get_structrue_layers
+    // FullName:  EnhanceProcess::get_structrue_layers
+    // Access:    public 
+    // Returns:   cv::Mat
+    // Qualifier:
+    // Parameter: cv::Mat & src
+    // Parameter: int ksize
+    //************************************
     cv::Mat get_structrue_layers(cv::Mat& src, int ksize);
 
-
-
-
-
-
-
-
-
-
-
-
-    /** @XD hyit-bigvision
-    *
-    src is source image
-    return Mat is enhanced image
-    if Mat is a black image, illustrate src is not 1 or 3
-    channels image
-    */
+    //************************************
+    // Company:   BigVision
+    // Author:    Xu Duo
+    // Date:	  2023/11/13
+    // Method:    enhance_image
+    // FullName:  EnhanceProcess::enhance_image
+    // Access:    public 
+    // Returns:   cv::Mat
+    // Qualifier:
+    // Parameter: cv::Mat & src
+    //************************************
     cv::Mat enhance_image(cv::Mat& src);
 
 
+    //************************************
+    // Company:   BigVision
+    // Author:    Xu Duo
+    // Date:	  2023/11/13
+    // Method:    artifical_color
+    // FullName:  EnhanceProcess::artifical_color
+    // Access:    public 
+    // Returns:   void
+    // Qualifier:
+    // Parameter: cv::Mat & green
+    // Parameter: cv::Mat & red
+    //************************************
     void artifical_color(cv::Mat& green, cv::Mat& red);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
